@@ -1,3 +1,5 @@
+# Swagger UI integration
+
 Excellent — now that you’ve got roles and security locked in, let’s add **validation** to protect your API from bad data input.
 
 We'll use:
@@ -123,7 +125,7 @@ You now have:
 
 ---
 
-### Pick a Next Feature:
+### Pick a Next Feature
 
 1. 🧪 Add **unit tests** (Jest or Supertest)?
 2. 📊 Add **request logging** + error logs?
@@ -132,7 +134,6 @@ You now have:
 5. 🌍 **Deploy to production** with MongoDB Atlas & Vercel or Render?
 
 Let me know what you’d like next — I’ll set it up for you!
-
 
 You're almost at the finish line! Now let’s **document your API** — critical for you, your team, or future frontend devs to integrate smoothly.
 
