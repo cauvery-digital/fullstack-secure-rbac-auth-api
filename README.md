@@ -3,6 +3,7 @@
 A full-featured authentication backend built with Express + MongoDB:
 
 ## 🔐 Features
+
 - JWT login/logout with refresh tokens (httpOnly cookie)
 - Email verification
 - Password reset via email
@@ -12,6 +13,7 @@ A full-featured authentication backend built with Express + MongoDB:
 - Swagger API docs
 
 ## 🧪 Tech Stack
+
 - Express
 - MongoDB + Mongoose
 - JWT
@@ -36,14 +38,14 @@ A full-featured authentication backend built with Express + MongoDB:
 
 ✅ Express backend with:
 
-* Authentication (JWT + Refresh Token via Cookie)
-* Email Verification + Reset Password (Nodemailer)
-* Role-based access (user, admin)
-* Unverified account auto-deletion (Agenda + MongoDB)
-* Rate-limiting, Helmet, XSS/CORS/HPP protection
-* Validation via express-validator
-* Swagger-powered API docs
-* Deployment-ready setup with .env.example
+- Authentication (JWT + Refresh Token via Cookie)
+- Email Verification + Reset Password (Nodemailer)
+- Role-based access (user, admin)
+- Unverified account auto-deletion (Agenda + MongoDB)
+- Rate-limiting, Helmet, XSS/CORS/HPP protection
+- Validation via express-validator
+- Swagger-powered API docs
+- Deployment-ready setup with .env.example
 
 ✅ Step 1: Create Project Structure
 

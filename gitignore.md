@@ -1,6 +1,8 @@
+# .gitignore file commonly used for Node.js
+
 Here is a `.gitignore` file commonly used for Node.js projects in **VS Code** on **Windows**. This ensures that unnecessary files and directories (such as environment files, `node_modules`, OS-generated files, and editor-specific settings) are ignored by Git.
 
-### ✅ `.gitignore` for Node.js + VS Code + Windows
+## ✅ `.gitignore` for Node.js + VS Code + Windows
 
 ```gitignore# Logs
 logs
@@ -214,7 +216,7 @@ nx-cache/
 
 ```
 
-### 📌 How to use:
+## 📌 How to use
 
 1. Create a file named `.gitignore` in the root directory of your Node.js project.
 2. Paste the contents above into the file.
