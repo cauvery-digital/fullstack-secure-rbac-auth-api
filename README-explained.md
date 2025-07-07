@@ -1,4 +1,4 @@
-# How to develop a backend server more securely. Give me step by step, in brief, with code by using express, cors, mongoose, validator, dotenv, nodemailer,and  helmet with email verification service
+# How to develop a backend server more securely. step by step, in brief, with code by using express, cors, mongoose, validator, dotenv, nodemailer,and  helmet with email verification service
 
 To develop a secure backend server using **Express**, **Mongoose**, **dotenv**, **CORS**, **validator**, **nodemailer**, and **helmet** — with email verification — follow this step-by-step guide:
 
