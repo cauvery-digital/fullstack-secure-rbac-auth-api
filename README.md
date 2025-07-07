@@ -98,14 +98,3 @@ NODE_ENV=development
 npm run dev         # With nodemon
 node server.js      # Production-style run
 ```
-
----
-
-✅ Step 3: Bundle It All into ZIP
-
-Would you like me to:
-
-- ✅ Package all code into a ZIP file and provide a download link?  
-- ✅ Push it to a GitHub repo with docs & commit history?
-
-Let me know and I’ll deliver the ready-to-use package (ZIP or GitHub).
