@@ -79,7 +79,10 @@ exports.login = async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
   });
 
-  res.json({ accessToken });
+  res.json({ 
+    id: user._id,
+    name: user.name,
+    email: user.email, accessToken });
 };
 
 exports.refresh = async (req, res) => {
