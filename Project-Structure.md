@@ -4,6 +4,9 @@
 secure-auth-api/
 ├── agenda/
 │   └── index.js
+├── config/
+│   └── database.js
+│   └── sendEmailConfig.js
 ├── controllers/
 │   └── authController.js
 ├── docs/
@@ -21,6 +24,7 @@ secure-auth-api/
 │   └── adminRoutes.js
 ├── utils/
 │   ├── sendEmail.js
+│   ├── emailTemplets.js
 │   └── token.js
 ├── validators/
 │   ├── authValidators.js

@@ -111,3 +111,130 @@ Let me know if you want me to show how to:
 * Structure this in a modular pattern for larger apps
 
 Would you like that?
+
+To **validate `req.query` or `req.params` using Zod** in an Express app, you can slightly extend your middleware to support all parts of the request: `body`, `query`, and `params`.
+
+---
+
+## ✅ Step-by-Step Guide to Validate `req.query` / `req.params`
+
+---
+
+### ✅ 1. **Update Middleware to Accept Optional Schemas**
+
+```js
+// middlewares/validate.js
+const validate = ({ body, query, params }) => (req, res, next) => {
+  try {
+    if (body) {
+      const result = body.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.flatten().fieldErrors });
+      }
+      req.body = result.data;
+    }
+
+    if (query) {
+      const result = query.safeParse(req.query);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.flatten().fieldErrors });
+      }
+      req.query = result.data;
+    }
+
+    if (params) {
+      const result = params.safeParse(req.params);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.flatten().fieldErrors });
+      }
+      req.params = result.data;
+    }
+
+    next();
+  } catch (err) {
+    return res.status(500).json({ error: "Validation error", details: err.message });
+  }
+};
+
+module.exports = validate;
+```
+
+---
+
+### ✅ 2. **Define Schemas for `query` or `params`**
+
+```js
+// schemas/user.schema.js
+const { z } = require("zod");
+
+const getUserByIdParamsSchema = z.object({
+  id: z.string().uuid("Invalid user ID format"), // assume UUID
+});
+
+const userQuerySchema = z.object({
+  search: z.string().optional(),
+  page: z.string().regex(/^\d+$/, "Page must be a number").optional(),
+});
+
+module.exports = {
+  getUserByIdParamsSchema,
+  userQuerySchema,
+};
+```
+
+---
+
+### ✅ 3. **Use in Route**
+
+```js
+// routes/user.routes.js
+const express = require("express");
+const { getUserByIdParamsSchema, userQuerySchema } = require("../schemas/user.schema");
+const validate = require("../middlewares/validate");
+
+const router = express.Router();
+
+// Validate route params
+router.get(
+  "/:id",
+  validate({ params: getUserByIdParamsSchema }),
+  (req, res) => {
+    const userId = req.params.id;
+    res.json({ message: `User ID: ${userId}` });
+  }
+);
+
+// Validate query params
+router.get(
+  "/search",
+  validate({ query: userQuerySchema }),
+  (req, res) => {
+    const { search, page } = req.query;
+    res.json({ search, page });
+  }
+);
+
+module.exports = router;
+```
+
+---
+
+## 🧠 Summary
+
+* ✅ `req.body` — validate with `validate({ body: schema })`
+* ✅ `req.query` — validate with `validate({ query: schema })`
+* ✅ `req.params` — validate with `validate({ params: schema })`
+
+You can combine them like:
+
+```js
+validate({
+  body: bodySchema,
+  query: querySchema,
+  params: paramsSchema,
+})
+```
+
+---
+
+Let me know if you'd like this middleware written in **TypeScript**, or **structured into a reusable validator factory** for a clean, DRY setup.
