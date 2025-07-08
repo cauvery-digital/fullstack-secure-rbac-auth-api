@@ -10,11 +10,4 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify().then(()=> console.log("✔ SMTP Config. working")).catch((err)=> console.log("\n❌ SMTP Connection",err));
 
-module.exports = async function sendEmail(to, subject, html) {
-  await transporter.sendMail({
-    from: process.env.EMAIL_SENDER,
-    to,
-    subject,
-    html,
-  });
-};
+module.exports = transporter;

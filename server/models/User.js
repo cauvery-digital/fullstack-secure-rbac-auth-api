@@ -2,12 +2,22 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 
+function capitalizeName(name) {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
       trim: true,
+      minlength: 3,
+      maxlength: 50,
+      set: capitalizeName,
       validate: [validator.isAlpha, "Only alphabets allowed"],
     },
     email: {
@@ -22,6 +32,11 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       select: false,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     isVerified: {
       type: Boolean,
       default: false,
@@ -30,11 +45,18 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    verificationToken: String,
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     refreshToken: {
       type: String,
       select: false,
     },
+    verificationToken: String,
+    verificationTokenExpiresAt: Date,
+    resetPasswordToken: String,
+    resetPasswordExpiresAt: Date,
   },
   { timestamps: true }
 );

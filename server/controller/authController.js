@@ -1,12 +1,19 @@
 const User = require("../models/User.js");
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const {
   generateToken,
   verifyToken,
   signAccessToken,
   signRefreshToken,
 } = require("../utils/jwt.js");
-const sendEmail = require("../utils/sendEmail.js");
-const sendVerificationEmail = require('../utils/sendVerificationEmail');
+// const sendEmail = require("../utils/sendEmail.js");
+const {
+  sendVerificationEmail,
+  sendVerificationSuccessEmail
+} = require('../utils/emails.js');
+
+// This function handles user registration, including email verification.
 
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -19,20 +26,21 @@ exports.register = async (req, res) => {
   const user = await User.create({ name, email, password, verificationToken });
 
   const verifyLink = `${process.env.CLIENT_URL}/api/auth/verify-email?token=${verificationToken}`;
+  await sendVerificationEmail(user);
+  // await sendEmail(
+  //   email,
+  //   "Verify your email",
+  //   `<p>Click to verify: <a href="${verifyLink}">Verify Email</a></p>`
+  // );
 
-  await sendEmail(
-    email,
-    "Verify your email",
-    `<p>Click to verify: <a href="${verifyLink}">Verify Email</a></p>`
-  );
-
-  res.json({ 
-    sucess: "you are registered successfully",
-    message: "Verification email sent",
-    name : user.name,
-    email:user.email,
-
-   });
+  res.status(201).json({
+			success: true,
+			message: "User created successfully",
+			user: {
+				...user._doc,
+				password: undefined,
+			},
+		});
 };
 
 exports.verifyEmail = async (req, res) => {
@@ -46,7 +54,12 @@ exports.verifyEmail = async (req, res) => {
     user.isVerified = true;
     user.verificationToken = null;
     await user.save();
-
+    await sendVerificationSuccessEmail(user);
+      // await sendEmail(
+      //   user.email,
+      //   'Email Verified Successfully',
+      //   `<p>Hello ${user.name},<br>Your email has been verified successfully!</p>`
+      // );
     res.json({ message: "Email verified successfully" });
   } catch {
     res.status(400).json({ error: "Invalid or expired token" });
@@ -163,3 +176,62 @@ exports.reSendVerificationEmail = async (req, res) => {
     res.status(500).json({ error: 'Failed to resend verification email' });
   }
 }
+
+exports.forgotPassword = async (req, res) => {
+	const { email } = req.body;
+	try {
+		const user = await User.findOne({ email });
+
+		if (!user) {
+			return res.status(400).json({ success: false, message: "User not found" });
+		}
+
+		// Generate reset token
+		const resetToken = crypto.randomBytes(20).toString("hex");
+		const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
+
+		user.resetPasswordToken = resetToken;
+		user.resetPasswordExpiresAt = resetTokenExpiresAt;
+
+		await user.save();
+
+		// send email
+		await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+
+		res.status(200).json({ success: true, message: "Password reset link sent to your email" });
+	} catch (error) {
+		console.log("Error in forgotPassword ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+exports.resetPassword = async (req, res) => {
+	try {
+		const { token } = req.params;
+		const { password } = req.body;
+
+		const user = await User.findOne({
+			resetPasswordToken: token,
+			resetPasswordExpiresAt: { $gt: Date.now() },
+		});
+
+		if (!user) {
+			return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
+		}
+
+		// update password
+		const hashedPassword = await bcryptjs.hash(password, 10);
+
+		user.password = hashedPassword;
+		user.resetPasswordToken = undefined;
+		user.resetPasswordExpiresAt = undefined;
+		await user.save();
+
+		await sendResetSuccessEmail(user.email);
+
+		res.status(200).json({ success: true, message: "Password reset successful" });
+	} catch (error) {
+		console.log("Error in resetPassword ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};

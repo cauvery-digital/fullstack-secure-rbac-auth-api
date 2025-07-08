@@ -4,8 +4,9 @@ const connecDatabase = require("./config/connectDatabse.js");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
 const cors = require("cors");
-const hpp = require("hpp");
-const xss = require("xss-clean");
+// const hpp = require("hpp");
+const cookieParser = require("cookie-parser");
+// const xss = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const authRoutes = require("./routes/auth.js");
 const deleteUnverifiedUsers = require("./jobs/deleteUnverifiedUsers");
@@ -19,8 +20,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(hpp());                            // Prevent HTTP Param Pollution
-app.use(xss());                            // Sanitize user input
+// app.use(hpp());                            // Prevent HTTP Param Pollution
+//app.use(xss());                            // Sanitize user input
 app.use(cookieParser());                   // Read cookies
 app.use(express.json());                   // JSON body parser
 

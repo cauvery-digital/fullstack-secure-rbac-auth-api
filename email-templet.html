@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email</title>
+    <style>
+      button {
+        background-color: #4169e1;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #4169e1;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    "
+  >
+    <div
+      style="
+        background: #4169e1;
+        padding: 20px;
+        text-align: center;
+      "
+    >
+      <h1 style="color: white; margin: 0">Verify Your Email</h1>
+    </div>
+    <div
+      style="
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 5px #000000;
+      "
+    >
+      <h2>Hello!, {name}</h2>
+      <p>Thank you for signing up! Your verification Link is:</p>
+      <div style="text-align: center; margin: 30px 0">
+        <span style="font-size: 20px; font-weight: bold; color: #4169e1;"
+          >Please verify your email by clicking the button below:</span
+        >
+        <div style="margin-top: 20px">
+          <button>
+            <a
+              style="color: #ffffff; text-decoration: none; font-weight: 600;font-size: 18px;"
+              href="{link}"
+              >Verify Email</a
+            >
+          </button>
+        </div>
+      </div>
+      <p>
+        If link is not working, please copy and paste the following URL into
+        your browser:
+      </p>
+      <div
+        style="
+          box-sizing: border-box 1px solid;
+          padding: 10px;
+          margin: 20px 0;
+          border-radius: 5px;
+          background-color: #f1f1f1;
+        ">
+        <p style="color: #191970;" onclick="navigator.clipboard.writeText(this.innerText).then(() => alert('Copied!'))">
+          {verificationLink}
+        </p>
+      </div>
+      <p>The verification is required to complete your registration.</p>
+      <p>This link will expire in 15 minutes for security reasons.</p>
+      <p>If you didn't create an account with us, please ignore this email.</p>
+      <p>Best regards,<br />GEI Team</p>
+    </div>
+    <div
+      style="
+        text-align: center;
+        margin-top: 20px;
+        color: #888;
+        font-size: 0.8em;
+      "
+    >
+      <p>This is an automated message, please do not reply to this email.</p>
+    </div>
+  </body>
+</html>
