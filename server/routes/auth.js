@@ -8,7 +8,10 @@ const {
   refresh,
   profile,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  updateProfile,
+  updatePassword,
+  deleteAccount,
 } = require("../controller/authController.js");
 const requireAuth = require("../middleware/requireAuth");
 const router = express.Router();

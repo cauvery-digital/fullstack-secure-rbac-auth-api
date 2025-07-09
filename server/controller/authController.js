@@ -235,3 +235,74 @@ exports.resetPassword = async (req, res) => {
 		res.status(400).json({ success: false, message: error.message });
 	}
 };
+
+exports.updateProfile = async (req, res) => {
+  const { name, email } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+
+    await user.save();
+
+    res.json({ message: "Profile updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update profile" });
+  }
+};
+
+exports.updatePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const user = await User.findById(userId).select("+password");
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) return res.status(401).json({ error: "Current password is incorrect" });
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update password" });
+  }
+};
+
+exports.deleteAccount = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json({ message: "Account deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete account" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  const { name, email } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+
+    await user.save();
+
+    res.json({ message: "Profile updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update profile" });
+  }
+};
