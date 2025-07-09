@@ -210,13 +210,13 @@ exports.WELCOME_EMAIL_TEMPLATE = `
 
               <!-- Login Button -->
               <div style="text-align: center; margin-bottom: 30px;">
-                <a href="#" class="button" style="background-color: royalblue; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-size: 16px;">
+                <a href="{link}" class="button" style="background-color: royalblue; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-size: 16px;">
                   Log In to Your Account
                 </a>
               </div>
 
               <p style="font-size: 14px; color: #555;">
-                If you have any questions, feel free to <a href="#" style="color: #2c3e50; text-decoration: underline;">contact our support team</a>.
+                If you have any questions, feel free to <a href="{contact}" style="color: #2c3e50; text-decoration: underline;">contact our support team</a>.
               </p>
             </td>
           </tr>
