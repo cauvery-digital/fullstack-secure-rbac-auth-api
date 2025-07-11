@@ -14,12 +14,13 @@ const {
   deleteAccount,
 } = require("../controller/authController.js");
 const requireAuth = require("../middleware/requireAuth");
+const rateLimiter = require("../middleware/rateLimiter.js");
 const router = express.Router();
 
-router.post("/signup", register);
-router.post("/login", login);
-router.post("/logout", logout);
-router.post("/resend-verification", reSendVerificationEmail);
+router.post("/signup", rateLimiter, register);
+router.post("/login", rateLimiter, login);
+router.post("/logout", rateLimiter, logout);
+router.post("/resend-verification", rateLimiter, reSendVerificationEmail);
 router.get("/profile", requireAuth, profile);
 router.post("/refresh", refresh);
 router.get("/verify-email", verifyEmail);

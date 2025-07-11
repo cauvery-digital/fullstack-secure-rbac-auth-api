@@ -97,6 +97,81 @@ exports.VERIFICATION_EMAIL_TEMPLATE = `
 </html>
 `;
 
+exports.WELCOME_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Email Verified Successfully</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </style>
+  <style>
+    @media only screen and (max-width: 600px) {
+      .container { width: 100% !important; padding: 20px !important; }
+      .button { width: 100% !important; display: block !important; }
+    }
+    .button:hover {
+      background-color: #2c80d3 !important;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f6f8fa; font-family: Arial, sans-serif;">
+  <table width="100%" cellspacing="0" cellpadding="0" bgcolor="#f6f8fa">
+    <tr>
+      <td align="center" style="padding: 40px 10px;">
+        <table class="container" width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; overflow: hidden;">
+          
+          <!-- Header -->
+          <tr>
+            <td style="background-color: royalblue; padding: 30px; text-align: center;">
+           <!-- <img src="https://yourdomain.com/logo.png" alt="Your Logo" width="120" style="margin-bottom: 20px;" /> -->
+
+              <h1 style="margin: 0; font-size: 24px; color: #ffffff;">Welcome to GEI</h1>
+            </td>
+          </tr>
+
+          <!-- Message -->
+          <tr>
+            <td style="padding: 30px; color: #333;">
+              <p style="font-size: 18px; margin: 0 0 20px; font-weight:bold;">
+                Hi {name},
+              </p>
+              <p style="font-size: 16px; margin: 0 0 20px;">
+                Your email address has been successfully verified. You’re all set to get started with your account.
+              </p>
+              <p style="font-size: 16px; margin: 0 0 30px;">
+                Click the button below to log in and explore everything we offer.
+              </p>
+
+              <!-- Login Button -->
+              <div style="text-align: center; margin-bottom: 30px;">
+                <a href="{login_url}" class="button" style="background-color: royalblue; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-size: 16px;">
+                  Log In to Your Account
+                </a>
+              </div>
+
+              <p style="font-size: 14px; color: #555;">
+                If you have any questions, feel free to <a href="{support_url}" style="color: #2c3e50; text-decoration: underline;">contact our support team</a>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #ecf0f1; padding: 20px; text-align: center; font-size: 12px; color: #7f8c8d;">
+              &copy; 2025 GEI. All rights reserved.<br>
+              123 Web Street, Tech City, India
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
+
 exports.PASSWORD_RESET_SUCCESS_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">
@@ -162,80 +237,7 @@ exports.PASSWORD_RESET_REQUEST_TEMPLATE = `
 </body>
 </html>
 `;
-exports.WELCOME_EMAIL_TEMPLATE = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Email Verified Successfully</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </style>
-  <style>
-    @media only screen and (max-width: 600px) {
-      .container { width: 100% !important; padding: 20px !important; }
-      .button { width: 100% !important; display: block !important; }
-    }
-    .button:hover {
-      background-color: #2c80d3 !important;
-    }
-  </style>
-</head>
-<body style="margin: 0; padding: 0; background-color: #f6f8fa; font-family: Arial, sans-serif;">
-  <table width="100%" cellspacing="0" cellpadding="0" bgcolor="#f6f8fa">
-    <tr>
-      <td align="center" style="padding: 40px 10px;">
-        <table class="container" width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; overflow: hidden;">
-          
-          <!-- Header -->
-          <tr>
-            <td style="background-color: royalblue; padding: 30px; text-align: center;">
-           <!-- <img src="https://yourdomain.com/logo.png" alt="Your Logo" width="120" style="margin-bottom: 20px;" /> -->
 
-              <h1 style="margin: 0; font-size: 24px; color: #ffffff;">Welcome to GEI</h1>
-            </td>
-          </tr>
-
-          <!-- Message -->
-          <tr>
-            <td style="padding: 30px; color: #333;">
-              <p style="font-size: 18px; margin: 0 0 20px; font-weight:bold;">
-                Hi {name},
-              </p>
-              <p style="font-size: 16px; margin: 0 0 20px;">
-                Your email address has been successfully verified. You’re all set to get started with your account.
-              </p>
-              <p style="font-size: 16px; margin: 0 0 30px;">
-                Click the button below to log in and explore everything we offer.
-              </p>
-
-              <!-- Login Button -->
-              <div style="text-align: center; margin-bottom: 30px;">
-                <a href="#" class="button" style="background-color: royalblue; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-size: 16px;">
-                  Log In to Your Account
-                </a>
-              </div>
-
-              <p style="font-size: 14px; color: #555;">
-                If you have any questions, feel free to <a href="#" style="color: #2c3e50; text-decoration: underline;">contact our support team</a>.
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background-color: #ecf0f1; padding: 20px; text-align: center; font-size: 12px; color: #7f8c8d;">
-              &copy; 2025 GEI. All rights reserved.<br>
-              123 Web Street, Tech City, India
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-`;
 
 exports.WELCOME_EMAIL_TEMPLATE1 = `
 <!DOCTYPE html>
