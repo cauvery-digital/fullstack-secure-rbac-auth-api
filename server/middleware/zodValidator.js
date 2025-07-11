@@ -1,32 +1,52 @@
 const { z } = require("zod");
 
+// Email must match RFC standard and allow alphanumeric + dots + underscores before @
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+// Password: 6-64 characters, at least 1 lowercase, 1 uppercase, 1 digit, 1 special char
+const passwordPattern =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9])[A-Za-z\\d@$!%*?&^#_~]{6,64}$/;
+
+const emailRules = z
+  .string()
+  .min(5, "Email is too short")
+  .max(100, "Email is too long")
+  .regex(emailPattern, "Invalid email format");
+
+const passwordRules = z
+  .string()
+  .regex(passwordPattern, {
+    message:
+      "Password must be 6–64 characters, include upper and lower case letters, a number, and a special character",
+  });
+
 const registerSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  name: z.string().trim().min(1, "Name is required"),
+  email: emailRules,
+  password: passwordRules,
 });
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: emailRules,
   password: z.string().min(1, "Password is required"),
 });
 
 const emailOnlySchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: emailRules,
 });
 
 const passwordResetSchema = z.object({
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: passwordRules,
 });
 
 const updatePasswordSchema = z.object({
   currentPassword: z.string().min(1, "Current password is required"),
-  newPassword: z.string().min(6, "New password must be at least 6 characters"),
+  newPassword: passwordRules,
 });
 
 const updateProfileSchema = z.object({
-  name: z.string().min(1, "Name is required").optional(),
-  email: z.string().email("Invalid email format").optional(),
+  name: z.string().trim().min(1, "Name is required").optional(),
+  email: emailRules.optional(),
 });
 
 module.exports = {

@@ -77,7 +77,7 @@ exports.login = async (req, res) => {
       .json({ error: "Invalid credentials or unverified email" });
   }
 
-  const valid = await user.matchPassword(password);
+  const valid = await user.comparePassword(password);
   if (!valid) return res.status(401).json({ error: "Invalid credentials" });
 
   const accessToken = signAccessToken(user._id);

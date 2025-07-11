@@ -8,6 +8,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-transporter.verify().then(()=> console.log("✔ SMTP Config. working")).catch((err)=> console.log("\n❌ SMTP Connection",err)); // Verify the connection configuration
-// Log the verification result
+transporter.verify().then(()=> console.log("✔ SMTP Config. working")).catch((err)=> console.log("\n❌ SMTP Connection",err));
+
 module.exports = transporter;
