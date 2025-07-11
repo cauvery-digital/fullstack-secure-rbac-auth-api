@@ -8,7 +8,7 @@ const {
 
 exports.sendVerificationEmail = async (user, verifyLink) => {
   try {
-    awaitsendEmail(
+    await sendEmail(
       user.email,
       "Verify Your Email",
       VERIFICATION_EMAIL_TEMPLATE.replace("{name}", user.name)
@@ -24,7 +24,7 @@ exports.sendVerificationEmail = async (user, verifyLink) => {
 
 exports.sendVerificationSuccessEmail = async (user) => {
   try {
-    awaitsendEmail(
+    await sendEmail(
       user.email,
       "Email Verified Successfully",
       WELCOME_EMAIL_TEMPLATE.replace("{name}", user.name)
@@ -42,13 +42,13 @@ exports.sendWelcomeEmail = async (email, name) => {
   const recipient = email;
 
   try {
-    const response = await transporter.sendMail(
+    await sendEmail(
       recipient,
       "Email Verified Successfully",
       WELCOME_EMAIL_TEMPLATE.replace("{name}", name)
     );
 
-    console.log("Welcome email sent successfully", response);
+    console.log("Welcome email sent successfully");
   } catch (error) {
     console.error(`Error sending welcome email`, error);
     throw new Error(`Error sending welcome email: ${error}`);
@@ -59,7 +59,7 @@ exports.sendPasswordResetEmail = async (email, resetURL) => {
   const recipient = email;
 
   try {
-    const response = await transporter.sendMail(
+    await sendEmail(
       recipient,
       "Reset your password",
       PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL)
@@ -75,13 +75,13 @@ exports.sendResetSuccessEmail = async (email, name) => {
   const recipient = email;
 
   try {
-    const response = await transporter.sendMail(
+    await sendEmail(
       recipient,
       "Password Reset Successful",
       PASSWORD_RESET_SUCCESS_TEMPLATE.replace("{name}", name),
       "Password Reset"
     );
-    console.log("Password reset email sent successfully", response);
+    console.log("Password reset email sent successfully");
   } catch (error) {
     console.error(`Error sending password reset success email`, error);
     throw new Error(`Error sending password reset success email: ${error}`);
